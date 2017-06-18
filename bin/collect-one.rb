@@ -25,6 +25,18 @@ GPIO_PIN = 4
     }
   }
 
-  puts data.to_json
+  measurement = 'conditions'
+  tags = []
+  tags << "valid_humidity=#{ val.humidity > 10.0 && val.humidity < 95.0 ? true : false }"
+  tags << "valid_temp=#{ val.temp > 20.0 && val.temp < 125.0 ? true : false }"
+  values = []
+  values << "temperature=#{ val.temp_f }"
+  values << "humidity=#{ val.humidity }"
+  values << "es=#{ es }"
+  values << "ea=#{ ea }"
+  values << "vpd=#{ vpd }"
 
-  puts "wrote: #{data}" if VERBOSE
+  data = "#{measurement},#{tags.join(",")} #{values.join(",")}"
+
+  puts data
+
