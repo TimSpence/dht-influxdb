@@ -16,8 +16,9 @@ in an InfluxDB database.
 
 * raspbian os
 * ruby 2.2+
-* dht-sensor-ffi rubygem
+* dht-sensor-ffi gem
 * influxdb gem
+* kalman_filter gem
  
 ## Telegraf
 
