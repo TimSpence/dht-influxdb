@@ -3,7 +3,7 @@
 ## Overview
 
 Quick and dirty script to read environmental data from a DHT-22 sensor and store it
-in an InfluxDB database 
+in an InfluxDB database.
 
 ## Dependencies
 
@@ -21,7 +21,8 @@ in an InfluxDB database
  
 ## Telegraf
 
-The collect-one.rb script is compatible with the Telegraf exec plugin.
+The collect-one.rb script is compatible with the Telegraf exec plugin.  It outputs the
+sensor data in InfluxDB line protocol (minus the timestamp because Telegraf chokes on it).
 
 ### Config
 
