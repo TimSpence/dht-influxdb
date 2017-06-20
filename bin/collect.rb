@@ -4,7 +4,6 @@ require 'influxdb'
 require 'dht-sensor-ffi'
 require 'kalman_filter'
 $: << File.expand_path("../../lib", __FILE__)
-require 'ambient'
 require 'measurement'
 
 VERBOSE = false
