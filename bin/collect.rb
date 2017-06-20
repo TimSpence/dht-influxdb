@@ -3,6 +3,8 @@
 require 'influxdb'
 require 'dht-sensor-ffi'
 require 'kalman_filter'
+$: << File.expand_path("../../lib", __FILE__)
+require 'ambient'
 
 VERBOSE = false
 DHT_MODEL = 22  #models are dht-11 and dht-22
@@ -21,9 +23,7 @@ humidity_filter_a = KalmanFilter.new(
 
 while true
   val = DhtSensor.read(GPIO_PIN,DHT_MODEL)
-  es = 0.6108 * Math.exp(17.27 * val.temp / (val.temp + 237.3))
-  ea = val.humidity / 100 * es
-  vpd = (ea - es).abs
+  vpd = Ambient.VPD(val.temp, val.humidity)
   temp_filter_a.measurement = val.temp_f
   humidity_filter_a.measurement = val.humidity
 
@@ -32,8 +32,6 @@ while true
       humidity: val.humidity,
       temp_filter_a: temp_filter_a.value,
       humidity_filter_a: humidity_filter_a.value,
-      es: es,
-      ea: ea,
       vpd: vpd },
     timestamp: Time.now.to_i,
     series: 'conditions',
