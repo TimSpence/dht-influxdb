@@ -34,8 +34,8 @@ class TemperatureMeasurement < Measurement
   attr_reader :scale
 
   def initialize(value, scale=TemperatureScale::Celsius)
-    super("temperature", value, { unit: "degrees" })
     @scale = scale
+    super("temperature", value, { unit: "degrees" })
   end
 
   def is_valid?
@@ -53,7 +53,7 @@ class TemperatureMeasurement < Measurement
   end
 
   def to_celsius
-    @scale = TemperatureScale::Celsius ?
+    @scale == TemperatureScale::Celsius ?
       @value
     :
       (@value - 32) * 5 / 9
