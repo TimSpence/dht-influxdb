@@ -19,7 +19,20 @@ in an InfluxDB database.
 * dht-sensor-ffi gem
 * influxdb gem
 * kalman_filter gem
- 
+
+## Usage
+
+Command line example:
+```
+bin/collect-one.rb
+
+```
+yields this output:
+```
+conditions,valid_humidity=true,valid_temp=true temperature=73.03999862670898,humidity=59.79999923706055,es=2.775631105221316,ea=1.659827379745962,vpd=1.115803725475354
+
+```
+
 ## Telegraf
 
 The collect-one.rb script is compatible with the Telegraf exec plugin.  It outputs the
