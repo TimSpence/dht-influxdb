@@ -4,7 +4,10 @@ require 'influxdb'
 require 'dht-sensor-ffi'
 require 'micro-optparse'
 $: << File.expand_path("../../lib", __FILE__)
-require 'measurement'
+require 'dht-influxdb/measurement'
+require 'dht-influxdb/temperature'
+require 'dht-influxdb/humidity'
+require 'dht-influxdb/vpd'
 
 options = Parser.new do |p|
   p.banner = "Collects data from each sensor and optionally saves to an influx db"
@@ -12,15 +15,18 @@ options = Parser.new do |p|
   p.option :scale, "temperature scale", :default => "fahrenheit", :value_in_set => [ "fahrenheit", "celsius" ]
   p.option :verbose, "enable verbose output", :default => false
   p.option :write, "write measurement to influx db", :default => false
+  p.option :loop, "loop 5ever", :default => false
+  p.option :sleep, "seconds to sleep between loops", :default => 2,
+    :value_satisfies => lambda { |x| x > 0 }
 end.process!
 DHT_MODEL = 22  #models are dht-11 and dht-22
 GPIO_PIN = 4
 
-influxdb = InfluxDB::Client.new("logger")
+influxdb = InfluxDB::Client.new("logger") if options[:write]
 
-while true
+def collect_data(opts)
   reading = DhtSensor.read(GPIO_PIN,DHT_MODEL)
-  if(options[:scale] == "fahrenheit")
+  if(opts[:scale] == "fahrenheit")
     temp = TemperatureMeasurement.new(reading.temp_f, TemperatureScale::Fahrenheit)
   else
     temp = TemperatureMeasurement.new(reading.temp, TemperatureScale::Celsius)
@@ -40,9 +46,16 @@ while true
     }
   }
 
-  influxdb.write_point("conditions", data) if options[:write]
+  influxdb.write_point("conditions", data) if opts[:write]
+  puts "data: #{data}" if opts[:verbose]
+end
 
-  puts "wrote: #{data}" if options[:verbose]
-  sleep(2)
+if(options[:loop])
+  while true
+    collect_data(options)
+    sleep(options[:sleep])
+  end
+else
+  collect_data(options)
 end
 
