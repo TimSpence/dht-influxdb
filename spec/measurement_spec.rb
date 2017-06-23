@@ -18,12 +18,12 @@ RSpec.describe(Measurement, type: :measurement) do
   end
   it "accepts a name and a value" do
     expect {
-      m = Measurement.new("some name", "some value")
+      m = Measurement.new("some name", 0.0)
     }.to_not raise_error(ArgumentError)
   end
   it "has a name" do
     name = "name"
-    m = Measurement.new(name, "0.0")
+    m = Measurement.new(name, 0.0)
     expect(m.name).to equal(name)
   end
   it "has a value" do

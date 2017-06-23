@@ -12,6 +12,7 @@ class Measurement
 
   def initialize(name, value, options={})
     @name = name
+    raise ArgumentError unless(value.is_a? Float or value.is_a? Fixnum)
     @value = value
     @unit = options.has_key?(:unit) ? options[:unit] : "none"
   end
