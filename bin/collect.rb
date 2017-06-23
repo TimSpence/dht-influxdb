@@ -7,6 +7,7 @@ $: << File.expand_path("../../lib", __FILE__)
 require 'dht-influxdb/temperature'
 require 'dht-influxdb/humidity'
 require 'dht-influxdb/vpd'
+require 'dht-influxdb/grip'
 
 options = Parser.new do |p|
   p.banner = "Collects data from each sensor and optionally saves to an influx db"
@@ -33,17 +34,8 @@ def collect_data(opts)
   rh = HumidityMeasurement.new(reading.humidity)
   vpd = VpdMeasurement.new(temp, rh)
 
-  data = {
-    values: { temperature: temp.value,
-      humidity: rh.value,
-      vpd: vpd.value },
-    timestamp: Time.now.to_i,
-    series: 'conditions',
-    tags: { 
-      valid_humidity: rh.is_valid?,
-      valid_temp: temp.is_valid?
-    }
-  }
+  grip = Grip.new("conditions", [temp, rh, vpd], Time.now.to_i)
+  data = grip.as_json
 
   influxdb.write_point("conditions", data) if opts[:write]
   puts "data: #{data}" if opts[:verbose]
