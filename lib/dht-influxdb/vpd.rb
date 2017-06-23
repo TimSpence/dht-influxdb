@@ -1,3 +1,5 @@
+require 'dht-influxdb/measurement'
+
 class VpdMeasurement < Measurement
   def initialize(temp, humidity)
     raise ArgumentError unless temp.is_a?(TemperatureMeasurement) && 

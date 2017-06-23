@@ -1,4 +1,3 @@
-require 'dht-influxdb/measurement'
 require 'dht-influxdb/humidity'
 
 RSpec.describe(HumidityMeasurement, type: :humiditymeasurement) do

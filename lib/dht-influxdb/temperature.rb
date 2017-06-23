@@ -1,3 +1,5 @@
+require 'dht-influxdb/measurement'
+
 class TemperatureMeasurement < Measurement
 
   attr_reader :scale

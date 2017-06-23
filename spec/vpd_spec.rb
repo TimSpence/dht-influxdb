@@ -1,5 +1,4 @@
 require 'dht-influxdb/vpd'
-require 'dht-influxdb/measurement'
 require 'dht-influxdb/humidity'
 require 'dht-influxdb/temperature'
 

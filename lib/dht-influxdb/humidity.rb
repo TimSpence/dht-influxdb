@@ -1,3 +1,5 @@
+require 'dht-influxdb/measurement'
+
 class HumidityMeasurement < Measurement
   def initialize(value)
     super("humidity", value, { unit: "percent" })

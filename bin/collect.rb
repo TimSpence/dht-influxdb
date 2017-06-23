@@ -4,7 +4,6 @@ require 'influxdb'
 require 'dht-sensor-ffi'
 require 'micro-optparse'
 $: << File.expand_path("../../lib", __FILE__)
-require 'dht-influxdb/measurement'
 require 'dht-influxdb/temperature'
 require 'dht-influxdb/humidity'
 require 'dht-influxdb/vpd'
