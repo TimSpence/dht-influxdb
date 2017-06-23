@@ -30,16 +30,6 @@ class Measurement
   end
 end
 
-class HumidityMeasurement < Measurement
-  def initialize(value)
-    super("humidity", value, { unit: "percent" })
-  end
-
-  def is_valid?
-    @value > 10.0 && value < 95.0
-  end
-end
-
 class VpdMeasurement < Measurement
   def initialize(temp, humidity)
     raise ArgumentError unless temp.is_a?(TemperatureMeasurement) && 
