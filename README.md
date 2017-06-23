@@ -24,14 +24,27 @@ in an InfluxDB database.
 
 Command line example:
 ```
-bin/collect-one.rb
+bin/collect-one.rb -v
 
 ```
-yields this output:
+yields output similar to this:
 ```
 conditions,valid_humidity=true,valid_temp=true temperature=73.03999862670898,humidity=59.79999923706055,es=2.775631105221316,ea=1.659827379745962,vpd=1.115803725475354
 
 ```
+### Options
+```
+$ ./bin/collect.rb -h
+Collects data from each sensor and optionally saves to an influx db
+-s, --scale fahrenheit           temperature scale
+-v, --[no-]verbose               enable verbose output
+-w, --[no-]write                 write measurement to influx db
+-l, --[no-]loop                  loop 5ever
+-e, --sleep 2                    seconds to sleep between loops
+-h, --help                       Show this message
+-V, --version                    Print version
+```
+The script can take one measurement or loop.
 
 ## Telegraf
 
