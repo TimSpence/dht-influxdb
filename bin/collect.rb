@@ -4,7 +4,10 @@ require 'influxdb'
 require 'dht-sensor-ffi'
 require 'micro-optparse'
 $: << File.expand_path("../../lib", __FILE__)
-require 'measurement'
+require 'dht-influxdb/measurement'
+require 'dht-influxdb/temperature'
+require 'dht-influxdb/humidity'
+require 'dht-influxdb/vpd'
 
 options = Parser.new do |p|
   p.banner = "Collects data from each sensor and optionally saves to an influx db"
