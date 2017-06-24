@@ -13,6 +13,16 @@ class Grip
   end
 
   def as_json
+    formatted(:json)
+  end
+
+  def as_line_protocol
+    formatted(:line_protocol)
+  end
+
+  private
+
+  def formatted(format)
     data = {}
     data[:series] = series
     data[:timestamp] = timestamp
@@ -23,6 +33,20 @@ class Grip
       tag_name = "valid_#{m.name}"
       data[:tags][tag_name] = m.is_valid?
     end
-    data.to_json
+    if(format == :json)
+      data.to_json
+    elsif(format == :line_protocol)
+      tags = []
+      values = []
+      data[:tags].each do |k,v|
+        tags << "#{k}=#{v}"
+      end
+      data[:values].each do |k,v|
+        values << "#{k}=#{v}"
+      end
+      "#{series},#{tags.join(",")} #{values.join(",")}"
+    else
+      raise UnsupportedException
+    end
   end
 end

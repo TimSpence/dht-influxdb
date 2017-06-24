@@ -30,4 +30,11 @@ RSpec.describe(Grip, type: :grip) do
     j = JSON.parse(g.as_json)
     expect(j['series']).to eq("weather")
   end
+  it "outputs line protocol" do
+    t = TemperatureMeasurement.new(25.0)
+    h = HumidityMeasurement.new(8.0)
+    g = Grip.new("weather", [t, h])
+    lp = g.as_line_protocol
+    expect(lp).to eq("weather,valid_temperature=true,valid_humidity=false temperature=25.0,humidity=8.0")
+  end
 end
