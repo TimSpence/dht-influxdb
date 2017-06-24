@@ -6,7 +6,7 @@ class HumidityMeasurement < Measurement
   end
 
   def is_valid?
-    @value > 10.0 && value < 95.0
+    value > 10.0 && value < 95.0
   end
 end
 
