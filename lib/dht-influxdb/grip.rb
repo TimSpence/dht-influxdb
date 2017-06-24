@@ -8,7 +8,7 @@ class Grip
       raise ArgumentError unless m.class.superclass == Measurement
     end
     @measurements = measurements
-    raise ArgumentError unless timestamp.is_a? Fixnum
+    raise ArgumentError unless timestamp.is_a? Integer
     @timestamp = timestamp
   end
 

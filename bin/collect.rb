@@ -18,6 +18,8 @@ options = Parser.new do |p|
   p.option :loop, "loop 5ever", :default => false
   p.option :sleep, "seconds to sleep between loops", :default => 2,
     :value_satisfies => lambda { |x| x > 0 }
+  p.option :format, "output format", :default => "json", 
+    :value_in_set => [ "json", "line-protocol" ]
 end.process!
 DHT_MODEL = 22  #models are dht-11 and dht-22
 GPIO_PIN = 4
@@ -35,8 +37,11 @@ def collect_data(opts)
   vpd = VpdMeasurement.new(temp, rh)
 
   grip = Grip.new("conditions", [temp, rh, vpd], Time.now.to_i)
-  data = grip.as_json
-
+  if(opts[:format] == "line_protocol"
+     data = grip.as_line_protocol
+  else
+    data = grip.as_json
+  end
   influxdb.write_point("conditions", data) if opts[:write]
   puts "data: #{data}" if opts[:verbose]
 end
