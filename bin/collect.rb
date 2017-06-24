@@ -18,13 +18,11 @@ options = Parser.new do |p|
   p.option :loop, "loop 5ever", :default => false
   p.option :sleep, "seconds to sleep between loops", :default => 2,
     :value_satisfies => lambda { |x| x > 0 }
-  p.option :format, "output format", :default => "json", 
+  p.option :format, "output format", :default => "line-protocol", 
     :value_in_set => [ "json", "line-protocol" ]
 end.process!
 DHT_MODEL = 22  #models are dht-11 and dht-22
 GPIO_PIN = 4
-
-influxdb = InfluxDB::Client.new("logger") if options[:write]
 
 def collect_data(opts)
   reading = DhtSensor.read(GPIO_PIN,DHT_MODEL)
@@ -42,7 +40,10 @@ def collect_data(opts)
   else
     data = grip.as_json
   end
-  influxdb.write_point("conditions", data) if opts[:write]
+  if(options[:write])
+    influxdb = InfluxDB::Client.new("logger")
+    influxdb.write_point("conditions", data)
+  end
   puts "#{data}" if opts[:verbose]
 end
 
