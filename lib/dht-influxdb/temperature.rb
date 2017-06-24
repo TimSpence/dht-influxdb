@@ -10,24 +10,24 @@ class TemperatureMeasurement < Measurement
   end
 
   def is_valid?
-    @scale == TemperatureScale::Celsius ?
-      @value > -7.0 && value < 51.0
+    scale == TemperatureScale::Celsius ?
+      value > -7.0 && value < 51.0
     :
-      @value > 20.0 && value < 125.0
+      value > 20.0 && value < 125.0
   end
 
   def to_fahrenheit
-    @scale == TemperatureScale::Fahrenheit ?
-      @value
+    scale == TemperatureScale::Fahrenheit ?
+      value
     :
-      @value * 9 / 5 + 32
+      value * 9 / 5 + 32
   end
 
   def to_celsius
-    @scale == TemperatureScale::Celsius ?
-      @value
+    scale == TemperatureScale::Celsius ?
+      value
     :
-      (@value - 32) * 5 / 9
+      (value - 32) * 5 / 9
   end
 end
 

@@ -22,11 +22,11 @@ class Measurement
   end
 
   def as_json
-    { @name => @value}.to_json
+    { name => value}.to_json
   end
 
   def as_line_protocol
-    "#{@name}=#{@value}"
+    "#{name}=#{value}"
   end
 end
 
