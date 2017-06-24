@@ -51,6 +51,12 @@ The script can take one measurement or loop.
 The collect-one.rb script is compatible with the Telegraf exec plugin.  It outputs the
 sensor data in InfluxDB line protocol (minus the timestamp because Telegraf chokes on it).
 
+```
+$ bin/collect.rb --verbose --no-write --format line-protocol
+
+conditions,valid_temperature=true,valid_humidity=true,valid_vpd=true temperature=71.4199993133545,humidity=60.20000076293945,vpd=1.0458877756347904
+
+```
 ### Config
 
 Sample telegraf config:

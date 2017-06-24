@@ -43,7 +43,7 @@ def collect_data(opts)
     data = grip.as_json
   end
   influxdb.write_point("conditions", data) if opts[:write]
-  puts "data: #{data}" if opts[:verbose]
+  puts "#{data}" if opts[:verbose]
 end
 
 if(options[:loop])
