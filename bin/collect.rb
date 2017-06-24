@@ -37,7 +37,7 @@ def collect_data(opts)
   vpd = VpdMeasurement.new(temp, rh)
 
   grip = Grip.new("conditions", [temp, rh, vpd], Time.now.to_i)
-  if(opts[:format] == "line_protocol")
+  if(opts[:format] == "line-protocol")
      data = grip.as_line_protocol
   else
     data = grip.as_json
