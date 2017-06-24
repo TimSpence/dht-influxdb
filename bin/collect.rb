@@ -40,7 +40,7 @@ def collect_data(opts)
   else
     data = grip.as_json
   end
-  if(options[:write])
+  if(opts[:write])
     influxdb = InfluxDB::Client.new("logger")
     influxdb.write_point("conditions", data)
   end
