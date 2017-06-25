@@ -27,8 +27,8 @@ RSpec.describe(Grip, type: :grip) do
   it "outputs json" do
     t = TemperatureMeasurement.new(25.0)
     g = Grip.new("weather", [ t ])
-    j = JSON.parse(g.as_json)
-    expect(j['series']).to eq("weather")
+    j = g.as_json
+    expect(j.class).to be(Hash)
   end
   it "outputs line protocol" do
     t = TemperatureMeasurement.new(25.0)
