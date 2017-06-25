@@ -1,5 +1,3 @@
-require 'dht-influxdb/humidity'
-
 RSpec.describe(HumidityMeasurement, type: :humiditymeasurement) do
   it "expects a value" do
     expect {

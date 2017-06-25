@@ -1,5 +1,3 @@
-require 'dht-influxdb/grip'
-
 RSpec.describe(Grip, type: :grip) do
   it "accepts an array of measurements" do
     t = TemperatureMeasurement.new(25.0)
