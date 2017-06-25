@@ -29,12 +29,12 @@ class Grip
     data[:values] = {}
     data[:tags] = {}
     measurements.each do |m|
-      data[:values][m.name] = m.value
+      data[:values][m.name.to_sym] = m.value
       tag_name = "valid_#{m.name}"
-      data[:tags][tag_name] = m.is_valid?
+      data[:tags][tag_name.to_sym] = m.is_valid?
     end
     if(format == :json)
-      data.to_json
+      data
     elsif(format == :line_protocol)
       tags = []
       values = []
