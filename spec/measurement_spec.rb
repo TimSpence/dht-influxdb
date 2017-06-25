@@ -23,7 +23,7 @@ RSpec.describe(Measurement, type: :measurement) do
   it "accepts a name and a value" do
     expect {
       m = Measurement.new("some name", 0.0)
-    }.to_not raise_error(ArgumentError)
+    }.to_not raise_error
   end
   it "has a name" do
     name = "name"
