@@ -1,5 +1,3 @@
-require 'dht-influxdb/measurement'
-
 # Measurement with name = 'humidity'.
 class HumidityMeasurement < Measurement
 

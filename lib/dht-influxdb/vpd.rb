@@ -1,5 +1,3 @@
-require 'dht-influxdb/measurement'
-
 # Measurement with name = 'vpd'. Derives value of Vapor Pressure Deficit from
 # temperature and relative humidity.
 class VpdMeasurement < Measurement

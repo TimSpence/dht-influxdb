@@ -1,5 +1,3 @@
-require 'dht-influxdb/measurement'
-
 # Measurement with name = 'temperature'. Provides conversion methods.
 class TemperatureMeasurement < Measurement
 
