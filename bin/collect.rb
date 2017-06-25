@@ -42,7 +42,7 @@ def collect_data(opts)
   end
   if(opts[:write])
     influxdb = InfluxDB::Client.new("logger")
-    influxdb.write_point("conditions", data)
+    influxdb.write_points(data)
   end
   puts "#{data}" if opts[:verbose]
 end
