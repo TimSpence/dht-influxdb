@@ -9,7 +9,7 @@ class TemperatureMeasurement < Measurement
   # Creates a new TemperatureMeasurement
   # @param [Float,Fixnum] value the temperature measurement
   # @param [TemperatureScale::Celsius,TemperatureScale::Fahrenheit] scale
-  # @returns [TemperatureMeasurement] the object created
+  # @return [TemperatureMeasurement] the object created
   def initialize(value, scale=TemperatureScale::Celsius)
     @scale = scale
     super("temperature", value, { unit: "degrees" })
