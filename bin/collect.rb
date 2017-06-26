@@ -7,6 +7,7 @@ $: << File.expand_path("../../lib", __FILE__)
 require 'dht-influxdb/temperature'
 require 'dht-influxdb/humidity'
 require 'dht-influxdb/vpd'
+require 'dht-influxdb/grip'
 
 options = Parser.new do |p|
   p.banner = "Collects data from each sensor and optionally saves to an influx db"
@@ -17,11 +18,11 @@ options = Parser.new do |p|
   p.option :loop, "loop 5ever", :default => false
   p.option :sleep, "seconds to sleep between loops", :default => 2,
     :value_satisfies => lambda { |x| x > 0 }
+  p.option :format, "output format", :default => "line-protocol", 
+    :value_in_set => [ "json", "line-protocol" ]
 end.process!
 DHT_MODEL = 22  #models are dht-11 and dht-22
 GPIO_PIN = 4
-
-influxdb = InfluxDB::Client.new("logger") if options[:write]
 
 def collect_data(opts)
   reading = DhtSensor.read(GPIO_PIN,DHT_MODEL)
@@ -33,20 +34,18 @@ def collect_data(opts)
   rh = HumidityMeasurement.new(reading.humidity)
   vpd = VpdMeasurement.new(temp, rh)
 
-  data = {
-    values: { temperature: temp.value,
-      humidity: rh.value,
-      vpd: vpd.value },
-    timestamp: Time.now.to_i,
-    series: 'conditions',
-    tags: { 
-      valid_humidity: rh.is_valid?,
-      valid_temp: temp.is_valid?
-    }
-  }
-
-  influxdb.write_point("conditions", data) if opts[:write]
-  puts "data: #{data}" if opts[:verbose]
+  grip = Grip.new("conditions", [temp, rh, vpd], Time.now.to_i)
+  data = ""
+  if(opts[:format] == "line-protocol")
+     data = grip.as_line_protocol
+  else
+    data = grip.as_json
+  end
+  if(opts[:write])
+    influxdb = InfluxDB::Client.new("logger")
+    influxdb.write_points(data)
+  end
+  puts "#{data}" if opts[:verbose]
 end
 
 if(options[:loop])
