@@ -7,6 +7,7 @@ end
 require 'rdoc/task'
 require 'rake'
 require 'rspec/core/rake_task'
+require File.expand_path('../spec/spec_helper', __FILE__)
 
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'

@@ -1,5 +1,3 @@
-require 'dht-influxdb/temperature'
-
 RSpec.describe(TemperatureMeasurement, type: :temperaturemeasurement) do
   it "expects a value" do
     expect {

@@ -1,5 +1,3 @@
-require 'dht-influxdb/measurement'
-
 RSpec.describe(Measurement, type: :measurement) do
   it "expects a name" do
     expect {

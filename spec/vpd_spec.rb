@@ -1,7 +1,3 @@
-require 'dht-influxdb/vpd'
-require 'dht-influxdb/humidity'
-require 'dht-influxdb/temperature'
-
 RSpec.describe(VpdMeasurement, type: :vpdmeasurement) do
   it "expects a TemperatureMeasurement" do
     expect {
